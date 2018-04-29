@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% load static from staticfiles %}
+<html lang="{{ LANGUAGE_CODE|default:"es-ve" }}">
+    {% include 'base.head.template.html' %}
+    <body>
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'inicio' %}">Sistema de certifiacados para eventos</a>
+                    hola mundo!!
+          </div>
+        </div>
+
+      </nav>
+    </body>
