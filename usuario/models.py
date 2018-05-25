@@ -15,3 +15,32 @@ class Perfil(models.Model):
             ),
         ]
     )
+    telefono_casa = models.CharField(
+    max_length=16, help_text=_("Número telefónico de contacto con el usuario"),
+    validators=[
+        validators.RegexValidator(
+            r'^\+\d{3}-\d{3}-\d{7}$',
+            _("Número telefónico inválido. Solo se permiten números y los símbolos: + -")
+         ),
+      ]
+    )
+    ## Establece el correo de la persona
+    correo = models.CharField(
+        max_length=100, help_text=("correo@correo.com")
+    )
+    ## Nombre de la Persona
+    nombre = models.CharField(max_length=100)
+
+    ## Apellido de la Persona
+    apellido = models.CharField(max_length=100)
+
+    ## Cédula de la Persona
+    cedula = models.CharField(
+        max_length=9,
+        validators=[
+            validators.RegexValidator(
+                r'^[VE][\d]{8}$',
+                _("Introduzca un número de cédula válido. Solo se permiten números y una longitud de 8 carácteres. Se agrega un 0 si la longitud es de 7 carácteres.")
+            ),
+        ],unique=True
+    )
