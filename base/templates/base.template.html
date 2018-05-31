@@ -12,7 +12,44 @@
 
           </div>
         </div>
-
       </nav>
+
+
+
+
+      <div class="container-fluid">
+      <h2>{% block content_header_title %}{% trans 'Página Principal' %}{% endblock %}</h2>
+      {% block contenido %}
+      {% if request.user.is_authenticated %}
+      <div class="panel panel-default">
+         <div class="panel-heading">
+             <h4 class="text-center">Bienvenido {{ request.user.first_name }}</h4>
+         </div>
+         <div class="panel-body">
+             <h4 class="text-center">Proceda a registrar los datos del menú que se habilitó</h4>
+         </div>
+      </div>
+      {% else %}
+      <div class="panel panel-default">
+         <div class="panel-heading">
+             <h4 class="text-center">Bienvenido al Sistema de Certificación FUNDACITE</h4>
+         </div>
+         <div class="panel-body">
+             <h4 class="text-center"><a href="#"><span class="glyphicon glyphicon-user"> REGISTRO DE PARTICIPANTES</span></a></h4>
+         </div>
+      </div>
+      {% endif %}
+      {% endblock %}
+      </div>
+      {% include 'base.footer.template.html' %}
+      {% block extra_footer %}{% endblock %}
+
+
+
+
+
+
+
+
     </body>
 </html>

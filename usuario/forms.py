@@ -54,6 +54,16 @@ class UsuarioForm(forms.modelsForm):
         help_text=_("(país)-área-número")
     )
 
+    telefono_casa = models.CharField(
+        max_length=16, help_text=_("Número telefónico de contacto con el usuario"),
+        validators=[
+            validators.RegexValidator(
+                r'^\+\d{3}-\d{3}-\d{7}$',
+                _("Número telefónico inválido. Solo se permiten números y los símbolos: + -")
+            ),
+        ]
+    )
+
     correo = forms.EmailField(
         label=_("Correo Electrónico:"),
         max_length=100,
@@ -91,3 +101,39 @@ class UsuarioForm(forms.modelsForm):
             }
         )
     )
+
+def clean_cedula(self):
+    cedula = self.cleaned_data['cedula']
+
+    if User.objects.filter(username=cedula):
+            raise forms.ValidationError(_("Este usuario ya existe"))
+
+        return cedula
+
+def clean_verificar_contrasenha(self):
+        verificar_contrasenha = self.cleaned_data['verificar_contrasenha']
+        contrasenha = self.data['password']
+        if contrasenha != verificar_contrasenha:
+            raise forms.ValidationError(_("La contraseña no es la misma"))
+
+        return verificar_contrasenha
+
+
+
+class UsuarioUpdateForm(UsuarioForm):
+    def __init__(self, *args, **kwargs):
+        super(UsuarioUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['password'].required = False
+        self.fields['verificar_contrasenha'].required = False
+        self.fields['password'].widget.attrs['disabled'] = True
+        self.fields['verificar_contrasenha'].widget.attrs['disabled'] = True
+
+    def clean_verificar_contrasenha(self):
+        pass
+
+    class Meta:
+        model = User
+        exclude = [
+            'password','verificar_contrasenha','username','date_joined','last_login','is_active',
+            'is_superuser','is_staff'
+]

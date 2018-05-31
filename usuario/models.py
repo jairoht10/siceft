@@ -44,12 +44,12 @@ class Perfil(models.Model):
             ),
         ],unique=True
     )
-user = models.ManyToManyField(User,on_delete=models.CASCADE)
+#user = models.ManyToManyField(User,on_delete=models.CASCADE)
 
 class Meta:
 
-        verbose_name = _("Usuario")
-        verbose_name_plural = _("Usuarios")
+        verbose_name = _("Perfil")
+        verbose_name_plural = _("Perfiles")
         def __str__(self):
 
             return "%s, %s" % (self.user.first_name, self.user.last_name)
