@@ -1,10 +1,11 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 
-class UsuarioForm(forms.modelsForm):
+class UsuarioForm(forms.ModelForm):
 
- # Nombre del suscriptor
+    ## Nombre del suscriptor
     nombre=forms.CharField(
     label=_("Nombres"),
     max_length=100,
@@ -16,7 +17,7 @@ class UsuarioForm(forms.modelsForm):
          )
     )
 
-    # Apellido del suscriptor
+    ## Apellido del suscriptor
     apellido=forms.CharField(
     label=_("Apellidos"),
     max_length=100,
@@ -28,7 +29,7 @@ class UsuarioForm(forms.modelsForm):
         )
     )
 
-    # Se usa la cedula como username
+    ## Se usa la cedula como username
     cedula=forms.CharField(
     label=_("Cédula"),
     max_length=9,
@@ -54,7 +55,7 @@ class UsuarioForm(forms.modelsForm):
         help_text=_("(país)-área-número")
     )
 
-    telefono_casa = models.CharField(
+    telefono_casa = forms.CharField(
         max_length=16, help_text=_("Número telefónico de contacto con el usuario"),
         validators=[
             validators.RegexValidator(
@@ -102,21 +103,25 @@ class UsuarioForm(forms.modelsForm):
         )
     )
 
-def clean_cedula(self):
-    cedula = self.cleaned_data['cedula']
-
-    if User.objects.filter(username=cedula):
+    def clean_cedula(self):
+        cedula = self.cleaned_data['cedula']
+        if User.objects.filter(username=cedula):
             raise forms.ValidationError(_("Este usuario ya existe"))
-
         return cedula
 
-def clean_verificar_contrasenha(self):
+    def clean_verificar_contrasenha(self):
         verificar_contrasenha = self.cleaned_data['verificar_contrasenha']
         contrasenha = self.data['password']
         if contrasenha != verificar_contrasenha:
             raise forms.ValidationError(_("La contraseña no es la misma"))
-
         return verificar_contrasenha
+
+    class Meta:
+        model = User
+        exclude = [
+            'password','verificar_contrasenha','username','date_joined','last_login','is_active',
+            'is_superuser','is_staff'
+        ]
 
 
 
@@ -136,4 +141,4 @@ class UsuarioUpdateForm(UsuarioForm):
         exclude = [
             'password','verificar_contrasenha','username','date_joined','last_login','is_active',
             'is_superuser','is_staff'
-]
+        ]

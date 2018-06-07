@@ -28,8 +28,6 @@ class UsuarioCreate(CreateView):
         Perfil.objects.create(
             telefono=form.cleaned_data['telefono'],
             telefono_casa=form.cleaned_data['telefono_casa'],
-            ocupacion=form.cleaned_data['ocupacion'],
-            profesion=form.cleaned_data['profesion'],
             user= self.object,
         )
         return super(UsuarioCreate, self).form_valid(form)
