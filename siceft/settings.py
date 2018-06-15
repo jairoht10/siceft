@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'base',
     'usuario',
+    'evento',
 ]
 
 MIDDLEWARE = [
@@ -54,11 +55,13 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'siceft.urls'
 
 BASE_TEMPLATES = os.path.join(BASE_DIR, "base/templates")
+USUARIO_TEMPLATES = os.path.join(BASE_DIR, "usuario/templates")
+EVENTO_TEMPLATES = os.path.join(BASE_DIR, "evento/templates")
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_TEMPLATES],
+        'DIRS': [BASE_TEMPLATES, USUARIO_TEMPLATES, EVENTO_TEMPLATES],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,3 +133,5 @@ STATICFILES_DIRS = (
 LOGIN_URL = "login"
 
 LOGIN_REDIRECT_URL = 'inicio'
+
+LOGOUT_REDIRECT_URL = 'login'

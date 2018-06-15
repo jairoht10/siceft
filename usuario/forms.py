@@ -56,13 +56,16 @@ class UsuarioForm(forms.ModelForm):
     )
 
     telefono_casa = forms.CharField(
-        max_length=16, help_text=_("Número telefónico de contacto con el usuario"),
-        validators=[
-            validators.RegexValidator(
-                r'^\+\d{3}-\d{3}-\d{7}$',
-                _("Número telefónico inválido. Solo se permiten números y los símbolos: + -")
-            ),
-        ]
+        label=_("Teléfono local:"),
+        max_length=16,
+        widget=forms.TextInput(
+            attrs={
+                'clas   s': 'form-control input-sm', 'placeholder': '+058-000-0000000',
+                'data-rule-required': 'true', 'data-toggle': 'tooltip', 'size': '15',
+                'title': _("Indique el número telefónico de contacto"), 'data-mask': '+000-000-0000000'
+            }
+        ),
+        help_text=_("(país)-área-número")
     )
 
     correo = forms.EmailField(
