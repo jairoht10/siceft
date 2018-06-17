@@ -54,7 +54,7 @@ Nos movemos a la carpeta ProyectosDjango, descargamos el sistema y entramos a la
 
     (siceft) ~$ cd ../../ProyectosDjango/
 
-    (siceft) ~$ git clone https://gestion.cenditel.gob.ve/scm/git/sofi.git
+    (siceft) ~$ git clone https://github.com/jairoht10/siceft.git
 
     (siceft) ~$ cd siceft/
 
