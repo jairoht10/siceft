@@ -44,7 +44,8 @@ class Perfil(models.Model):
             ),
         ],unique=True
     )
-#user = models.ManyToManyField(User,on_delete=models.CASCADE)
+    
+    user = models.ManyToManyField(User,on_delete=models.CASCADE)
 
 class Meta:
 
