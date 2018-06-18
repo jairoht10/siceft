@@ -6,15 +6,25 @@ from django.utils.translation import ugettext_lazy as _
 class UsuarioForm(forms.ModelForm):
 
     ## Nombre del suscriptor
+    username = forms.CharField(
+        validators=[
+            validators.RegexValidator(
+                r'^[VE][\d]{8}$',
+                _("Introduzca un número de cédula válido. Solo se permiten números y una longitud de 8 carácteres. Se agregan ceros (0) si la longitud es de 7 o menos caracteres.")
+            ),
+        ], help_text=_("V00000000 ó E00000000")
+    )
+
+    ## Apellido del suscriptor
     nombre=forms.CharField(
     label=_("Nombres"),
     max_length=100,
     widget=forms.TextInput(
             attrs={
-                'class': 'form-control input-sm', 'data-toggle': 'tooltip', 'style': 'width:250px;',
-                'title':_("Indique Los Nombres de la Persona"),
+                'class':'form-control input-sm', 'data-toggle': 'tooltip', 'style': 'width:250px;',
+                'title':_("Indique Los Apellidos de la Persona"),
             }
-         )
+        )
     )
 
     ## Apellido del suscriptor
@@ -29,14 +39,12 @@ class UsuarioForm(forms.ModelForm):
         )
     )
 
-    ## Se usa la cedula como username
-    cedula=forms.CharField(
-    label=_("Cédula"),
-    max_length=9,
-    widget=forms.TextInput(
+    correo = forms.EmailField(
+        label=_("Correo Electrónico:"), max_length=100,
+        widget=forms.EmailInput(
             attrs={
-                'class': 'form-control input-sm', 'data-toggle': 'tooltip', 'style':'width:250px;',
-                'title': _("Indique la Cédula de la Persona"),
+                'class': 'form-control input-sm email-mask', 'data-toggle': 'tooltip',
+                'title': _("Indique el correo electrónico de contacto")
             }
         )
     )
@@ -68,19 +76,6 @@ class UsuarioForm(forms.ModelForm):
         help_text=_("(país)-área-número")
     )
 
-    correo = forms.EmailField(
-        label=_("Correo Electrónico:"),
-        max_length=100,
-        help_text=_("Cédula de Identidad del usuario"),
-        widget=forms.EmailInput(
-            attrs={
-                'class': 'form-control input-sm email-mask', 'placeholder': _("Correo de contacto"),
-                'data-toggle': 'tooltip', 'data-rule-required': 'true', 'style': 'width:250px',
-                'title': _("Indique el correo electrónico de contacto con el usuario.")
-            }
-        )
-    )
-
     password = forms.CharField(
         label=_("Contraseña:"),
         max_length=128,
@@ -106,12 +101,6 @@ class UsuarioForm(forms.ModelForm):
         )
     )
 
-    def clean_cedula(self):
-        cedula = self.cleaned_data['cedula']
-        if User.objects.filter(username=cedula):
-            raise forms.ValidationError(_("Este usuario ya existe"))
-        return cedula
-
     def clean_verificar_contrasenha(self):
         verificar_contrasenha = self.cleaned_data['verificar_contrasenha']
         contrasenha = self.data['password']
@@ -122,8 +111,7 @@ class UsuarioForm(forms.ModelForm):
     class Meta:
         model = User
         exclude = [
-            'password','verificar_contrasenha','username','date_joined','last_login','is_active',
-            'is_superuser','is_staff'
+            'perfil','date_joined',
         ]
 
 

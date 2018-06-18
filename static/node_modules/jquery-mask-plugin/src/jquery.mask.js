@@ -1,6 +1,6 @@
 /**
  * jquery.mask.js
- * @version: v1.14.15
+ * @version: v1.14.13
  * @author: Igor Escobar
  *
  * Created by Igor Escobar on 2012-03-10. Please report any bug at github.com/igorescobar/jQuery-Mask-Plugin
@@ -254,14 +254,14 @@
                 var keyCode = el.data('mask-keycode');
 
                 if ($.inArray(keyCode, jMask.byPassKeys) === -1) {
-                    var newVal = p.getMasked(),
+                    var newVal   = p.getMasked(),
                         caretPos = p.getCaret();
 
                     // this is a compensation to devices/browsers that don't compensate
                     // caret positioning the right way
                     setTimeout(function() {
                       p.setCaret(p.calculateCaretPosition());
-                    }, $.jMaskGlobals.keyStrokeCompensation);
+                    }, 10);
 
                     p.val(newVal);
                     p.setCaret(caretPos);
@@ -395,12 +395,6 @@
         jMask.options = options;
         jMask.remove = function() {
             var caret = p.getCaret();
-            if (jMask.options.placeholder) {
-                el.removeAttr('placeholder');
-            }
-            if (el.data('mask-maxlength')) {
-                el.removeAttr('maxlength');
-            }
             p.destroyEvents();
             p.val(jMask.getCleanVal());
             p.setCaret(caret);
@@ -455,7 +449,7 @@
                 }
 
                 if (maxlength) {
-                    el.attr('maxlength', mask.length).data('mask-maxlength', true);
+                    el.attr('maxlength', mask.length);
                 }
 
                 p.destroyEvents();
@@ -574,7 +568,6 @@
         dataMask: true,
         watchInterval: 300,
         watchInputs: true,
-        keyStrokeCompensation: 10,
         // old versions of chrome dont work great with input event
         useInput: !/Chrome\/[2-4][0-9]|SamsungBrowser/.test(window.navigator.userAgent) && eventSupported('input'),
         watchDataMask: false,

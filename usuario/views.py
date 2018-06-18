@@ -16,7 +16,7 @@ class UsuarioCreate(CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
 
-        self.object.username = form.cleaned_data['cedula']
+        self.object.username = form.cleaned_data['username']
         self.object.first_name = form.cleaned_data['nombre']
         self.object.last_name = form.cleaned_data['apellido']
         self.object.email = form.cleaned_data['correo']
@@ -24,7 +24,6 @@ class UsuarioCreate(CreateView):
         self.object.is_active = True
         self.object.save()
 
-        #user = User.objects.get(username=self.request.user.username)
         Perfil.objects.create(
             telefono=form.cleaned_data['telefono'],
             telefono_casa=form.cleaned_data['telefono_casa'],
