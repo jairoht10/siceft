@@ -7,6 +7,7 @@ class UsuarioForm(forms.ModelForm):
 
     ## Nombre del suscriptor
     username = forms.CharField(
+        label=_("Cédula (username):"),
         validators=[
             validators.RegexValidator(
                 r'^[VE][\d]{8}$',

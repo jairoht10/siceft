@@ -39,12 +39,12 @@ class UsuarioUpdate(UpdateView):
     model = User
     form_class = UsuarioUpdateForm
     template_name = "usuario.registro.html"
-    #success_url = reverse_lazy('usuario_lista')
+    success_url = reverse_lazy('inicio')
 
     def get_initial(self):
         datos_iniciales = super(UsuarioUpdate, self).get_initial()
         user = User.objects.get(pk=self.object.id)
-        datos_iniciales['cedula'] = user.username
+        datos_iniciales['username'] = user.username
         datos_iniciales['nombre'] = user.first_name
         datos_iniciales['apellido'] = user.last_name
         datos_iniciales['correo'] = user.email
@@ -55,6 +55,7 @@ class UsuarioUpdate(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+        self.object.username = form.cleaned_data['username']
         self.object.first_name = form.cleaned_data['nombre']
         self.object.last_name = form.cleaned_data['apellido']
         self.object.email = form.cleaned_data['correo']
