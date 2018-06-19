@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class UsuarioForm(forms.ModelForm):
 
-    ## Nombre del suscriptor
+    ## Cedula (login) del suscriptor
     username = forms.CharField(
         label=_("Cédula (username):"),
         validators=[
@@ -16,28 +16,28 @@ class UsuarioForm(forms.ModelForm):
         ], help_text=_("V00000000 ó E00000000")
     )
 
-    ## Apellido del suscriptor
+    ## Nombre del suscriptor
     nombre=forms.CharField(
-    label=_("Nombres"),
-    max_length=100,
-    widget=forms.TextInput(
-            attrs={
+        label=_("Nombres"),
+        max_length=100,
+        widget=forms.TextInput(
+                attrs={
                 'class':'form-control input-sm', 'data-toggle': 'tooltip', 'style': 'width:250px;',
-                'title':_("Indique Los Apellidos de la Persona"),
-            }
-        )
+                'title':_("Indique Los Nombres de la Persona"),
+                       }
+                )
     )
 
     ## Apellido del suscriptor
     apellido=forms.CharField(
-    label=_("Apellidos"),
-    max_length=100,
-    widget=forms.TextInput(
+        label=_("Apellidos"),
+        max_length=100,
+        widget=forms.TextInput(
             attrs={
                 'class':'form-control input-sm', 'data-toggle': 'tooltip', 'style': 'width:250px;',
                 'title':_("Indique Los Apellidos de la Persona"),
-            }
-        )
+                  }
+           )
     )
 
     correo = forms.EmailField(
@@ -63,7 +63,7 @@ class UsuarioForm(forms.ModelForm):
         ),
         help_text=_("(país)-área-número")
     )
-
+    ## Número telefónico de la casa de contacto con el usuario
     telefono_casa = forms.CharField(
         label=_("Teléfono local:"),
         max_length=16,
