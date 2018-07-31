@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core import validators
 from django.utils.translation import ugettext_lazy as _
+from usuario.models import Suscriptor
 
 class UsuarioForm(forms.ModelForm):
 
@@ -133,4 +134,41 @@ class UsuarioUpdateForm(UsuarioForm):
         exclude = [
             'password','verificar_contrasenha','username','date_joined','last_login','is_active',
             'is_superuser','is_staff'
+        ]
+
+class SuscriptorForm(forms.ModelForm):
+    #Clase que contiene los datos de las suscipciones de los usuarios a los eventos
+
+    ## Muestra el evento al que el usuario está suscrito
+    evento = forms.CharField(
+        label=_("Evento:"),
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control input-sm', 'data-toggle': 'tooltip', 'readonly':'true',
+                'title': _("Muestra el evento"),
+            }
+        )
+    )
+
+    ## Muestra al suscriptor
+    perfil = forms.CharField(
+        label=_("Perfil:"),
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control input-sm', 'data-toggle': 'tooltip', 'readonly':'true',
+                'title': _("Muestra el perfil"),
+            }
+        )
+    )
+
+    ## Variable que indica si el usuario puede descargar el certificado
+    otorgar = forms.BooleanField(
+        label= _("Otorgar:"),
+        required = False,
+    )
+
+    class Meta:
+        model = Suscriptor
+        exclude = [
+            'evento','perfil',
         ]

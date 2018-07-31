@@ -8,7 +8,7 @@
         <nav class="navbar navbar-inverse" style="background:#FF0000;">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{% url 'inicio' %}">SICEFT</a>
+                    <a class="navbar-brand" href="{% url 'inicio' %}"><font color = "white">SICEFT</font></a>
                 </div>
                 {% if request.user.is_authenticated %}
                 <ul class="nav navbar-nav navbar-right">
@@ -22,7 +22,7 @@
                 </ul>
                 {% else %}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Iniciar Sesión</a></li>
+                    <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span><font color= "white"> Iniciar Sesión</font></a></li>
                 </ul>
                 {% endif %}
            </div>

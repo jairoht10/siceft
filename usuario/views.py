@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from .models import Perfil
 from .forms import UsuarioForm, UsuarioUpdateForm
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DetailView, FormView
 
 # Create your views here.
 
