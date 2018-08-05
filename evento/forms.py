@@ -2,7 +2,6 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from .models import Evento, Certificado
-from base.constant import SINO
 
 class EventoForm(forms.ModelForm):
     """ Clase que contiene los formularios del evento """
@@ -29,15 +28,9 @@ class EventoForm(forms.ModelForm):
     )
 
     ## Permitir que los usuarios se suscriban a los eventos
-    suscripcion = forms.ChoiceField(
+    suscripcion = forms.BooleanField(
         label= _("¿Permitir Suscripciones?"),
-        choices= SINO,
-        widget=forms.Select(
-            attrs={
-                'class': 'form-control select2', 'data-toggle': 'tooltip',
-                'title': _("Seleccione la opción correcta"),
-            }
-        ),
+        required = False,
     )
 
     ## Fecha del evento
