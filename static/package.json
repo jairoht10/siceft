@@ -1,7 +1,7 @@
 {
     "dependencies": {
         "bootstrap": "3.3.7",
-        "datatables.net": "1.10.16",
+        "datatables.net": "1.10.22",
         "datatables.net-bs": "1.10.16",
         "datatables.net-autofill": "2.2.2",
         "datatables.net-autofill-bs": "2.0.0",
